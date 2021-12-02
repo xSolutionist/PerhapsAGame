@@ -9,7 +9,7 @@ using PerhapsAGame.Core.DataAccess;
 
 namespace PerhapsAGame.Migrations
 {
-    [DbContext(typeof(GameContext))]
+    [DbContext(typeof(SQLiteContext))]
     [Migration("20211202113011_AverageToDouble")]
     partial class AverageToDouble
     {

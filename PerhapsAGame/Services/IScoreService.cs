@@ -3,7 +3,7 @@ using PerhapsAGame.Core.Entities;
 
 namespace PerhapsAGame.Services
 {
-    public interface IPlayerService
+    public interface IScoreService
     {
         Player CreatePlayer(Player player);
         Score CreateScore(Score score);

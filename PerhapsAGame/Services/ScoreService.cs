@@ -6,11 +6,11 @@ using PerhapsAGame.Core.Entities;
 
 namespace PerhapsAGame.Services
 {
-    public class PlayerService : IPlayerService
+    public class ScoreService : IScoreService
     {
-        private readonly GameContext _context;
+        private readonly SQLiteContext _context;
 
-        public PlayerService(GameContext context)
+        public ScoreService(SQLiteContext context)
         {
             _context = context;
         }

@@ -10,7 +10,7 @@ using PerhapsAGame.Core.DataAccess;
 
 namespace PerhapsAGame.Migrations
 {
-    [DbContext(typeof(GameContext))]
+    [DbContext(typeof(SQLiteContext))]
     [Migration("20211125104102_initial")]
     partial class initial
     {

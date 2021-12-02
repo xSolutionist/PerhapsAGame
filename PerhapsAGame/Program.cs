@@ -1,22 +1,14 @@
 ﻿using PerhapsAGame.Core.DataAccess;
-using PerhapsAGame.Core.Entities;
-using PerhapsAGame.Core.GameBase;
 using PerhapsAGame.Core.Moo;
 using PerhapsAGame.Services;
-using System.Text;
 
 
-// Initialize
-IInputProvider input = new InputProvider(Console.ReadLine);
-IOutputProvider output = new OutputProvider(Console.WriteLine);
-
-var database = new GameContext();
-IPlayerService service = new PlayerService(database);
+var database = new SQLiteContext();
+IScoreService service = new ScoreService(database);
 var game = new MooGameController(service);
 
-// ! TODO: Fill and refactor game methods.
+
 game.Initialize();
-game.Draw();
 
 
 

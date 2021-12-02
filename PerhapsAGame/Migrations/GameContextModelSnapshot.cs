@@ -8,7 +8,7 @@ using PerhapsAGame.Core.DataAccess;
 
 namespace PerhapsAGame.Migrations
 {
-    [DbContext(typeof(GameContext))]
+    [DbContext(typeof(SQLiteContext))]
     partial class GameContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

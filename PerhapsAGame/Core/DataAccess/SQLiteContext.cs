@@ -4,14 +4,14 @@ using PerhapsAGame.Core.Entities;
 
 namespace PerhapsAGame.Core.DataAccess
 {
-    public class GameContext : DbContext
+    public class SQLiteContext : DbContext
     {
         public DbSet<Player> Players { get; set; }
         public DbSet<Score> Scores { get; set; }
 
         public string DbPath { get; private set; }
 
-        public GameContext()
+        public SQLiteContext()
         {
             var folder = Environment.SpecialFolder.Desktop;
             var path = Environment.GetFolderPath(folder);

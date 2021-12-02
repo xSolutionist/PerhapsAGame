@@ -11,18 +11,28 @@ namespace PerhapsAGame.Core.Moo
 {
     public class MooGameController : Game
     {
-        private readonly IPlayerService _service;
+        public event EventHandler OnGameWonEvent;
+        private readonly IScoreService _service;
         private readonly IInputProvider input = new InputProvider(Console.ReadLine);
         private readonly IOutputProvider output = new OutputProvider(Console.WriteLine);
         private MooState s = new();
         
-        public MooGameController(IPlayerService service)
+        public MooGameController(IScoreService service)
         {
             _service = service;
         }
 
+        public void CheckWinCondition() 
+        {
+            if (s.guess.SequenceEqual(s.target))
+            {
+                OnGameWonEvent?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         public override void Initialize()
         {
+            OnGameWonEvent += _OnGameWonEvent;
             s.target = GenerateTarget();
             output.Write("Enter your user name");
             s.playerName = input.Read();
@@ -31,23 +41,38 @@ namespace PerhapsAGame.Core.Moo
 
         public override void Draw()
         {
-
-            Array.ForEach(s.target, Print);
-
             while (true)
             {
-
-                GetGuess();
-                s.guesses++;
-                s.bulls = CheckBulls(s.target, s.guess);
-                s.cows = CheckCows(s.target, s.guess);
-                output.Write(GameState());
-                ResetGuessState();
-
-                if (s.guess.SequenceEqual(s.target))
-                    break;
+                Update();
             }
+        }
 
+        public override void Update()
+        {
+            GetGuess();
+            s.bulls = CheckBulls(s.target, s.guess);
+            s.cows = CheckCows(s.target, s.guess);
+            output.Write(GameState());
+            ResetGuessState();
+            CheckWinCondition();
+        }
+
+        private void _OnGameWonEvent(object? sender, EventArgs e)
+        {
+            UpdateCharts();
+            output.Write("You have won Hurra!");
+            output.Write("Continue? (y)");
+            var answer = input.Read();
+            if (answer == "y") 
+            { 
+                Console.Clear();
+                Draw();
+            }
+           Exit();
+        }
+
+        public void UpdateCharts()
+        {
             s.gamesPlayed++;
             GetCurrentAverage();
 
@@ -56,17 +81,16 @@ namespace PerhapsAGame.Core.Moo
             else
             {
                 var score = _service.GetScoreByPlayer(s.player);
-
                 UpdatePlayersAverage(score);
-
-                _service.EditScore(score.ScoreId, score);
             }
+
         }
 
         private void UpdatePlayersAverage(Score score)
         {
             var newAverage = (score.AverageScore + s.currentAverage) / 2;
             score.AverageScore = newAverage;
+            _service.EditScore(score.ScoreId, score);
         }
 
         private void ResetGuessState()
@@ -84,15 +108,7 @@ namespace PerhapsAGame.Core.Moo
            _service.CreateScore(score);
        }
 
-        public override void Update()
-        {
 
-        }
-
-        public override void Exit()
-        {
-
-        }
         private void GetCurrentAverage()
         {
             s.currentAverage = s.guesses / s.gamesPlayed;
@@ -107,6 +123,7 @@ namespace PerhapsAGame.Core.Moo
                 if (playerInput.Length == 4)
                 {
                     s.guess = GetIntArray(playerInput);
+                    s.guesses++;
                     break;
                 }
             }
@@ -178,9 +195,11 @@ namespace PerhapsAGame.Core.Moo
             }
             return s.bulls;
         }
+        public override void Exit()
+        {
+            Environment.Exit(0);
+        }
     }
-
-
-
+       
 
 }
