@@ -192,7 +192,7 @@ namespace PerhapsAGame.Services
 
         public Score GetScoreByPlayer(Player player)
         {
-            var score = _context.Scores.Find(player);
+            var score = _context.Scores.Find(player.PlayerId);
 
             if (score == null)
             {

@@ -11,7 +11,7 @@ namespace PerhapsAGame.Core.Entities
         public string? GameName { get; set; }
 
         public int GamesPlayed { get; set; }
-        public int AverageScore { get; set; }
+        public double AverageScore { get; set; }
         public int Highscore { get; set; }
     }
 }
