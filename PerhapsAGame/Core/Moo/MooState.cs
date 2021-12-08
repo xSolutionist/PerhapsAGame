@@ -9,16 +9,16 @@ namespace PerhapsAGame.Core.Moo
 {
     public class MooState
     {
-        public string gameName { get; init; } = "Moo";
-        public int[]? target { get; set; } = new int[4];
-        public int[]? guess { get; set; } = new int[4];
-        public Player? player { get; set; }
-        public string? playerName { get ; set; }
-        public int cows { get; set; }  = 0;
-        public int bulls { get; set; } = 0;
-        public int guesses { get; set; } = 0;
-        public double gamesPlayed { get; set; } = 0; 
-        public double currentAverage { get; set; } = 0;
+        public string GameName { get; init; } = "Moo";
+        public int[]? Target { get; set; } = new int[4];
+        public int[]? Guess { get; set; } = new int[4];
+        public Player? Player { get; set; }
+        public string? PlayerName { get ; set; }
+        public int Cows { get; set; }  = 0;
+        public int Bulls { get; set; } = 0;
+        public int Guesses { get; set; } = 0;
+        public double GamesPlayed { get; set; } = 0; 
+        public double CurrentAverage { get; set; } = 0;
 
     }
 }

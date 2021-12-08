@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PerhapsAGame;
 using PerhapsAGame.Core.DataAccess;
 
 #nullable disable
@@ -11,21 +10,18 @@ using PerhapsAGame.Core.DataAccess;
 namespace PerhapsAGame.Migrations
 {
     [DbContext(typeof(SQLiteContext))]
-    [Migration("20211125111106_addedGamesPlayed")]
-    partial class addedGamesPlayed
+    [Migration("20211206150600_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
 
-            modelBuilder.Entity("PerhapsAGame.Player", b =>
+            modelBuilder.Entity("PerhapsAGame.Core.Entities.Player", b =>
                 {
                     b.Property<int>("PlayerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CurrentScore")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -37,11 +33,14 @@ namespace PerhapsAGame.Migrations
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("PerhapsAGame.Score", b =>
+            modelBuilder.Entity("PerhapsAGame.Core.Entities.Score", b =>
                 {
                     b.Property<int>("ScoreId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("AverageScore")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("GameName")
                         .HasMaxLength(250)
@@ -63,9 +62,9 @@ namespace PerhapsAGame.Migrations
                     b.ToTable("Scores");
                 });
 
-            modelBuilder.Entity("PerhapsAGame.Score", b =>
+            modelBuilder.Entity("PerhapsAGame.Core.Entities.Score", b =>
                 {
-                    b.HasOne("PerhapsAGame.Player", "Player")
+                    b.HasOne("PerhapsAGame.Core.Entities.Player", "Player")
                         .WithMany("Scores")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -74,7 +73,7 @@ namespace PerhapsAGame.Migrations
                     b.Navigation("Player");
                 });
 
-            modelBuilder.Entity("PerhapsAGame.Player", b =>
+            modelBuilder.Entity("PerhapsAGame.Core.Entities.Player", b =>
                 {
                     b.Navigation("Scores");
                 });

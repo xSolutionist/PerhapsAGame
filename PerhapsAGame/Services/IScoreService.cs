@@ -9,9 +9,10 @@ namespace PerhapsAGame.Services
         Score CreateScore(Score score);
         IEnumerable<Player> GetPlayers();
         IEnumerable<Score> GetScores();
-        Player GetPlayerById(int id);
         Score GetScoreById(int id);
         Score GetScoreByPlayer(Player player);
+        Player GetPlayerById(int id);
+        Player GetPlayerByScore(Score score);
         Player GetPlayerByName(string name);
         void EditPlayer(int id, Player player);
         void EditScore(int id, Score score);

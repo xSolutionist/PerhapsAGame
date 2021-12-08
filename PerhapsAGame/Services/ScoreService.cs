@@ -132,7 +132,7 @@ namespace PerhapsAGame.Services
 
         public IEnumerable<Score> GetScores()
         {
-            return  _context.Scores.ToList();
+            return _context.Scores.Include(p => p.Player).ToList();
         }
 
         public void EditScore(int id, Score score)
@@ -192,15 +192,17 @@ namespace PerhapsAGame.Services
 
         public Score GetScoreByPlayer(Player player)
         {
-            var score = _context.Scores.Find(player.PlayerId);
-
-            if (score == null)
-            {
-                new EmptyResult();
-            }
-
+            var score = _context.Scores.Where(score => score.Player.PlayerId == player.PlayerId).FirstOrDefault();
             return score;
         }
+        public Player GetPlayerByScore(Score score)
+        {
+            var player = _context.Players.Where(player => player.PlayerId == score.Player.PlayerId).FirstOrDefault();
+            return player;
+        }
+
+
+
     }
 
 

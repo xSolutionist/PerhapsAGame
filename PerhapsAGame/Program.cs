@@ -1,16 +1,163 @@
-﻿using PerhapsAGame.Core.DataAccess;
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+using PerhapsAGame.Core.DataAccess;
 using PerhapsAGame.Core.Moo;
+using PerhapsAGame.Benchies;
 using PerhapsAGame.Services;
+using System.Security.Cryptography;
+using PerhapsAGame.Core.Entities;
+using PerhapsAGame.Core.GameBase;
 
 
-var database = new SQLiteContext();
-IScoreService service = new ScoreService(database);
-var game = new MooGameController(service);
+
+//                       BENCHMARK TESTS
+//var summary = BenchmarkRunner.Run<Benchmark>();
+//public class Benchmark
+//{
+
+//    int randomnumber1 = new();
+//    int randomnumber2 = new();
+
+//    [Benchmark]
+//    public void CalculateGoonger() 
+//    {
+//        randomnumber1 = Random.Shared.Next(0, 10000);
+//        randomnumber2 = Random.Shared.Next(0, 1000);
+
+//        var result = randomnumber1 * randomnumber2;
+//    }
+//    [Benchmark]
+//    public void CalculatePlus()
+//    {
+//        randomnumber1 = Random.Shared.Next(0, 10000);
+//        randomnumber2 = Random.Shared.Next(0, 1000);
+
+//        var result = randomnumber1 + randomnumber2;
+//    }
+
+//}
 
 
-game.Initialize();
+//                   SCORE PLAYER TESTS.
+var databases = new SQLiteContext();
+IScoreService service = new ScoreService(databases);
+
+var scores = service.GetScores().OrderByDescending(s => s.AverageScore);
+foreach (var score in scores)
+{
+    Console.WriteLine($"{score.Player.Name,20} {score.GamesPlayed,19} {score.AverageScore,18}");
+}
+
+//{
+//    Console.WriteLine("From score to players:?");
+
+//    Console.WriteLine($"Gamename:{ item.GameName } ScoreAverage {item.AverageScore} Playername; {item.Player.PlayerId} ");
+//}
 
 
+//var players = service.GetPlayers().ToList();
+
+//string headerss = null;
+
+
+//string[] headers = new string[] { "Name", "GamesPlayed", "Average" };
+
+//foreach (var item in headers)
+//{
+//   headerss += item.PadLeft(20);
+//}
+//Console.WriteLine(headerss);
+
+
+
+
+
+
+
+//    Console.WriteLine("should be isac, Isac, jurgen.");
+//var sortedlist = new List<Score>();
+
+//foreach (var item in players)
+//{
+//    var score = service.GetScoreByPlayer(item);
+//    Console.WriteLine($"PlayerName: {item.Name}");
+//}
+
+//var players1 = service.GetPlayers().ToList();
+
+
+
+//foreach (var item in players)
+//{
+//    Console.WriteLine(item.Name + "Name and ID:" + item.PlayerId);
+//    var scoree = service.GetScoreByPlayer(item);
+//    Console.WriteLine("Average + Gamesplayer" + scoree.AverageScore + scoree.GamesPlayed);
+//    Console.WriteLine("From score to playername:" + scoree.Player.Name + scoree.Player.Scores.FirstOrDefault().GameName);
+//}
+
+//var player = service.GetPlayerByName("Isac");
+//Console.WriteLine(player.Name + "Name and ID:" + player.PlayerId);
+//var score = service.GetScoreByPlayer(player);
+//Console.WriteLine(score.AverageScore);
+
+
+
+Dictionary<string, Action> gameLibrary = new();
+gameLibrary.Add("Moo", BuildAndStartMoo);
+gameLibrary.Add("Something", StartSomething);
+
+foreach (var item in gameLibrary.Keys)
+{
+    Console.WriteLine(item);
+}
+
+var command = Console.ReadLine();
+
+if (gameLibrary.ContainsKey(command))
+{
+    gameLibrary[command]();
+}
+
+
+void StartSomething()
+{
+    Console.WriteLine("oo");
+}
+
+void BuildAndStartMoo()
+{
+    var database = new SQLiteContext();
+    IScoreService service = new ScoreService(database);
+    IInputProvider input = new InputProvider(Console.ReadLine);
+    IOutputProvider output = new OutputProvider(Console.WriteLine);
+    MooState state = new();
+    IMooOrdinance ordinance = new MooOrdinance(service, input, output, state);
+    var game = new MooGameController(ordinance);
+    game.StartMoo();
+}
+
+
+// /////////////////////////////////////////////////////// TEST
+
+//private const int N = 10000;
+//private readonly byte[] data;
+
+//private readonly SHA256 sha256 = SHA256.Create();
+//private readonly MD5 md5 = MD5.Create();
+
+
+//public Benchmark()
+//{
+//    data = new byte[N];
+//    new Random(42).NextBytes(data);
+//}
+
+
+//[Benchmark]
+//public byte[] Sha256() => sha256.ComputeHash(data);
+
+//[Benchmark]
+//public byte[] Md5() => md5.ComputeHash(data);
 
 
 
@@ -66,7 +213,7 @@ game.Initialize();
 
 //while (true)
 //{
-    
+
 //    cows = 0;
 //    bulls = 0;
 //    // Validate Guess

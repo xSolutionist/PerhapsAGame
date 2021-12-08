@@ -14,8 +14,7 @@ namespace PerhapsAGame.Migrations
                 {
                     PlayerId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 250, nullable: true),
-                    CurrentScore = table.Column<int>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,8 +27,10 @@ namespace PerhapsAGame.Migrations
                 {
                     ScoreId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Game = table.Column<string>(type: "TEXT", maxLength: 250, nullable: true),
                     PlayerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    GameName = table.Column<string>(type: "TEXT", maxLength: 250, nullable: true),
+                    GamesPlayed = table.Column<int>(type: "INTEGER", nullable: false),
+                    AverageScore = table.Column<double>(type: "REAL", nullable: false),
                     Highscore = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
