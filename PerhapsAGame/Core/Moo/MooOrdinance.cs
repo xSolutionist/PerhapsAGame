@@ -25,17 +25,9 @@ namespace PerhapsAGame.Core.Moo
             _output = output;
             s = state;
         }
-        public void CheckWinCondition()
-        {
-            if (s.Guess.SequenceEqual(s.Target))
-            {
-                OnGameWonEvent?.Invoke(this, EventArgs.Empty);
-            }
-        }
 
         public override void Initialize()
         {
-
             OnGameWonEvent += _OnGameWonEvent;
             s.Target = GenerateTarget();
             _output.Write("Enter your user name");
@@ -45,21 +37,26 @@ namespace PerhapsAGame.Core.Moo
 
         public override void Draw()
         {
-            // Array.ForEach(s.target, Print);
             while (true)
-            {
                 Update();
-            }
         }
 
         public override void Update()
         {
-            GetGuess();
+            Guess();
             s.Bulls = CheckBulls(s.Target, s.Guess);
             s.Cows = CheckCows(s.Target, s.Guess);
-            _output.Write(GameState());
-            ResetGuessState();
+            _output.Write(CurrentGameState());
             CheckWinCondition();
+        }
+        public override void Exit()
+        {
+            Environment.Exit(0);
+        }
+        public void CheckWinCondition()
+        {
+            if (s.Guess.SequenceEqual(s.Target))
+                OnGameWonEvent?.Invoke(this, EventArgs.Empty);
         }
 
         private void _OnGameWonEvent(object? sender, EventArgs e)
@@ -132,7 +129,7 @@ namespace PerhapsAGame.Core.Moo
             foreach (var item in scores)
             {
                 var player = _service.GetPlayerById(item.Player.PlayerId);
-                Console.WriteLine($"{player.Name,20} {item.GamesPlayed,19} {item.AverageScore,18}");
+                Console.WriteLine($"{player.Name,20} {item.GamesPlayed,19} {Math.Round(item.AverageScore, 2),18}");
             }
         }
 
@@ -143,12 +140,12 @@ namespace PerhapsAGame.Core.Moo
             s.GamesPlayed--;
         }
 
-        private void GetGuess()
+        private void Guess()
         {
             while (true)
             {
                 Array.ForEach(s.Target, Print);
-                Console.WriteLine("Guess a number");
+                _output.Write("Guess a number");
                 var input = _input.Read();
                 if (input.Length == 4)
                 {
@@ -165,7 +162,7 @@ namespace PerhapsAGame.Core.Moo
                 s.Target[i] = Random.Shared.Next(0, 9);
             return s.Target;
         }
-        string GameState()
+        string CurrentGameState()
         {
             StringBuilder sb = new();
 
@@ -176,7 +173,9 @@ namespace PerhapsAGame.Core.Moo
 
             for (int i = 0; i < s.Cows; i++)
                 sb.Append("C");
+            ResetGuessState();
             return sb.ToString();
+
         }
 
         Player GetOrCreatePlayer(string playerName)
@@ -223,9 +222,6 @@ namespace PerhapsAGame.Core.Moo
             }
             return s.Bulls;
         }
-        public override void Exit()
-        {
-            Environment.Exit(0);
-        }
+      
     }
 }

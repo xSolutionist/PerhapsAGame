@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerhapsAGame", "PerhapsAGam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{AA0962EE-0DC5-4E77-82B3-380367C38DCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MooTests", "MooTests\MooTests.csproj", "{883A5DA5-FB0F-4951-B26D-7ADBA32A524A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AA0962EE-0DC5-4E77-82B3-380367C38DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA0962EE-0DC5-4E77-82B3-380367C38DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA0962EE-0DC5-4E77-82B3-380367C38DCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{883A5DA5-FB0F-4951-B26D-7ADBA32A524A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{883A5DA5-FB0F-4951-B26D-7ADBA32A524A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{883A5DA5-FB0F-4951-B26D-7ADBA32A524A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{883A5DA5-FB0F-4951-B26D-7ADBA32A524A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

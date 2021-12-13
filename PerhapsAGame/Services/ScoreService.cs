@@ -74,15 +74,21 @@ namespace PerhapsAGame.Services
             }
         }
 
-        public void DeletePlayer(int id)
+        public Player DeletePlayer(int id)
         {
             var player = _context.Players.Find(id);
             if (player == null)
             {
                 new EmptyResult();
             }
+            var scores = _context.Scores.Where(x => x.Player == player).ToList();
+            foreach (var score in scores)
+            {
+                _context.Scores.Remove(score);
+            }
             _context.Players.Remove(player);
             _context.SaveChanges();
+            return player;
            
         }
 

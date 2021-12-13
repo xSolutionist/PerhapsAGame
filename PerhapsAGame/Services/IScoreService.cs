@@ -16,7 +16,7 @@ namespace PerhapsAGame.Services
         Player GetPlayerByName(string name);
         void EditPlayer(int id, Player player);
         void EditScore(int id, Score score);
-        void DeletePlayer(int id);
+        Player DeletePlayer(int id);
         void DeleteScore(int id);
         bool PlayerExists (int id);
         bool PlayerExists(string name);

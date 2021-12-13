@@ -8,8 +8,8 @@ namespace PerhapsAGame.Core.GameBase
 {
     public class InputProvider : IInputProvider
     {
-        private readonly Func<string> _inputProvider;
-        public InputProvider(Func<string> inputProvider)
+        private readonly Func<string?> _inputProvider;
+        public InputProvider(Func<string?> inputProvider)
         {
             _inputProvider = inputProvider;
         }
