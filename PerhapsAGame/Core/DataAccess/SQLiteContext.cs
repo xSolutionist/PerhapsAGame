@@ -21,7 +21,7 @@ namespace PerhapsAGame.Core.DataAccess
         {
             var folder = Environment.SpecialFolder.Desktop;
             var path = Environment.GetFolderPath(folder);
-            DbPath = $"{path}{Path.DirectorySeparatorChar}PerhapsGameDB.db";
+            DbPath = $"{path}{Path.DirectorySeparatorChar}TestDb.db";
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
               => options.UseSqlite($"Data Source={DbPath}");

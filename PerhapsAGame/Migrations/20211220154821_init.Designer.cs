@@ -10,8 +10,8 @@ using PerhapsAGame.Core.DataAccess;
 namespace PerhapsAGame.Migrations
 {
     [DbContext(typeof(SQLiteContext))]
-    [Migration("20211206150600_initial")]
-    partial class initial
+    [Migration("20211220154821_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

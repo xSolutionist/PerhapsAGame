@@ -1,35 +1,22 @@
-﻿using PerhapsAGame.Core.Entities;
-using PerhapsAGame.Core.GameBase;
-using PerhapsAGame.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PerhapsAGame.Core.Moo
+﻿namespace PerhapsAGame.Core.Moo;
+public class MooGameController
 {
-    public class MooGameController
+    private readonly IGameManager _logic;
+
+    public MooGameController(IGameManager logic)
     {
-        private readonly IMooOrdinance _ordinance;
-
-        public MooGameController(IMooOrdinance ordinance)
-        {
-            _ordinance = ordinance;
-        }
-
-        public void StartMoo() 
-        {
-            _ordinance.Initialize();
-            _ordinance.Draw();
-        }
-
-        public void Exit() 
-        {
-           _ordinance.Exit();
-        }
-      
+        _logic = logic;
     }
-       
+
+    public void StartMoo()
+    {
+        _logic.Initialize();
+        _logic.Draw();
+    }
+
+    public void Exit()
+    {
+        _logic.Exit();
+    }
 
 }
